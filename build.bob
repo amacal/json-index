@@ -1,0 +1,58 @@
+using System.Collections.Generic;
+
+using Bob;
+
+public class Build : IBob
+{
+    private ITask Clean()
+    {
+        return FileSystem.Delete(parameters =>
+        {
+            parameters.Directories = FileSystem.Directories.Match("build");
+        });
+    }
+
+    private IEnumerable<ITask> Compile()
+    {
+        yield return MsBuild.Compile(parameters =>
+        {
+            parameters.Output = FileSystem.Directories.Relative("build\\output");
+        });
+    }
+
+    private IEnumerable<ITask> Pack()
+    {
+        yield return FileSystem.NewDirectory(parameters =>
+        {
+            parameters.Path = FileSystem.Directories.Relative("build\\package");
+        });
+
+        yield return NuGet.Pack(parameters =>
+        {
+            parameters.Output = FileSystem.Directories.Match("build\\package");
+            parameters.Path = NuGet.Path.Online(settings =>
+            {
+                settings.Cache = NuGet.Cache.AppData();
+            });
+            parameters.Specification = NuGet.Specification.Inline(package =>
+            {
+                package.Id = "json-index";
+                package.Version = "0.1.0-dev1";
+                package.Authors = "Adrian Macal";
+                package.Description = "JSON indexing library";
+                package.Files["lib\\net45"] = FileSystem.Files.Match("build\\output\\*.dll");
+            });
+        });
+    }
+
+    private IEnumerable<ITask> Default()
+    {
+        yield break;
+    }
+
+    public void Execute(IPipeline pipeline)
+    {
+        pipeline.Default(Default);
+        pipeline.Define(Clean, Compile, Default, Pack);
+    }
+}
