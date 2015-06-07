@@ -28,6 +28,7 @@ public class Build : IBob
         yield return MsBuild.Compile(parameters =>
         {
             parameters.Output = FileSystem.Directories.Relative("build\\output");
+            parameters.Properties.Add(MsBuild.Properties.Configuration.Release());
         });
     }
 
