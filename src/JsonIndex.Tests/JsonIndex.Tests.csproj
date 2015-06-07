@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D8141028-AA80-47B1-87B7-B8CBB8F0D7ED}</ProjectGuid>
+    <ProjectGuid>{4C79BB5F-16B4-4AFE-A946-CCAC1231383E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>JsonIndex</RootNamespace>
-    <AssemblyName>JsonIndex</AssemblyName>
+    <RootNamespace>JsonIndex.Tests</RootNamespace>
+    <AssemblyName>JsonIndex.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,26 +30,25 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Index.cs" />
-    <Compile Include="IndexBuilder.cs" />
-    <Compile Include="IndexEntry.cs" />
-    <Compile Include="IndexType.cs" />
-    <Compile Include="JsonArray.cs" />
-    <Compile Include="JsonContainer.cs" />
-    <Compile Include="JsonFalse.cs" />
-    <Compile Include="JsonNode.cs" />
-    <Compile Include="JsonNull.cs" />
-    <Compile Include="JsonNumber.cs" />
-    <Compile Include="JsonObject.cs" />
-    <Compile Include="JsonProperty.cs" />
-    <Compile Include="JsonVisitor.cs" />
-    <Compile Include="JsonText.cs" />
-    <Compile Include="JsonTrue.cs" />
+    <Compile Include="IndexFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\JsonIndex\JsonIndex.csproj">
+      <Project>{d8141028-aa80-47b1-87b7-b8cbb8f0d7ed}</Project>
+      <Name>JsonIndex</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />

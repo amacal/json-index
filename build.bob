@@ -44,7 +44,7 @@ public class Build : IBob
 
         yield return NUnit.Execute(parameters =>
         {
-            parameters.Assemblies = FileSystem.Files.Match("build\\output\\JsonIndex.dll");
+            parameters.Assemblies = FileSystem.Files.Match("build\\output\\JsonIndex.Tests.dll");
             parameters.XmlResult = FileSystem.Files.Relative("build\\nunit.xml");
         });
     }
