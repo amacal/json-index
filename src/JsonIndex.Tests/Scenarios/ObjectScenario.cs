@@ -36,6 +36,12 @@ namespace JsonIndex.Tests.Scenarios
                 Instance = instance,
                 Constraint = new JsonNumberConstraint()
             };
+
+            yield return new JsonScenario
+            {
+                Instance = instance,
+                Constraint = new JsonNullConstraint()
+            };
         }
     }
 }

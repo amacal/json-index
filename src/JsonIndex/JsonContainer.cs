@@ -24,10 +24,10 @@ namespace JsonIndex
                     return new JsonTrue();
 
                 case IndexType.False:
-                    return new JsonTrue();
+                    return new JsonFalse();
 
                 case IndexType.Null:
-                    return new JsonTrue();
+                    return new JsonNull();
 
                 default:
                     throw new NotSupportedException();

@@ -8,6 +8,7 @@ namespace JsonIndex.Tests
         private readonly List<string> names;
         private readonly List<string> texts;
         private readonly List<string> numbers;
+        private readonly JsonPrimitiveCollection primitives;
 
         public JsonCollector()
         {
@@ -15,6 +16,7 @@ namespace JsonIndex.Tests
             this.names = new List<string>();
             this.texts = new List<string>();
             this.numbers = new List<string>();
+            this.primitives = new JsonPrimitiveCollection();
         }
 
         public IEnumerable<string> Data
@@ -35,6 +37,11 @@ namespace JsonIndex.Tests
         public IEnumerable<string> Numbers
         {
             get { return this.numbers; }
+        }
+
+        public JsonPrimitiveCollection Primitives
+        {
+            get { return this.primitives; }
         }
 
         public void Visit(JsonObject instance)
@@ -73,14 +80,17 @@ namespace JsonIndex.Tests
 
         public void Visit(JsonTrue value)
         {
+            this.primitives.Add(value);
         }
 
         public void Visit(JsonFalse value)
         {
+            this.primitives.Add(value);
         }
 
         public void Visit(JsonNull value)
         {
+            this.primitives.Add(value);
         }
     }
 }

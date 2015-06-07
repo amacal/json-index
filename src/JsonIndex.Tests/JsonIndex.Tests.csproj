@@ -38,6 +38,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constraints\JsonBooleanConstraint.cs" />
+    <Compile Include="Constraints\JsonNullConstraint.cs" />
     <Compile Include="IndexFixture.cs" />
     <Compile Include="JsonCollector.cs" />
     <Compile Include="JsonConstraint.cs" />
@@ -45,6 +47,7 @@
     <Compile Include="JsonInstance.cs" />
     <Compile Include="Constraints\JsonNameConstraint.cs" />
     <Compile Include="Constraints\JsonNumberConstraint.cs" />
+    <Compile Include="JsonPrimitiveCollection.cs" />
     <Compile Include="JsonScenario.cs" />
     <Compile Include="Constraints\JsonTextConstraint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

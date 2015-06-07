@@ -30,6 +30,18 @@ namespace JsonIndex.Tests.Scenarios
                 Instance = instance,
                 Constraint = new JsonNumberConstraint()
             };
+
+            yield return new JsonScenario
+            {
+                Instance = instance,
+                Constraint = new JsonNullConstraint()
+            };
+
+            yield return new JsonScenario
+            {
+                Instance = instance,
+                Constraint = new JsonBooleanConstraint()
+            };
         }
 
         public static IEnumerable<JsonScenario> Mixed()
@@ -50,6 +62,24 @@ namespace JsonIndex.Tests.Scenarios
             {
                 Instance = instance,
                 Constraint = new JsonNumberConstraint("123")
+            };
+
+            yield return new JsonScenario
+            {
+                Instance = instance,
+                Constraint = new JsonNullConstraint(1)
+            };
+
+            yield return new JsonScenario
+            {
+                Instance = instance,
+                Constraint = new JsonBooleanConstraint(false, 1)
+            };
+
+            yield return new JsonScenario
+            {
+                Instance = instance,
+                Constraint = new JsonBooleanConstraint(true, 1)
             };
         }
     }
