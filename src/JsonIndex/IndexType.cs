@@ -2,18 +2,18 @@
 {
     public static class IndexType
     {
-        public static readonly byte Object = 1;
+        public const byte Object = 1;
 
-        public static readonly byte Array = 2;
+        public const byte Array = 2;
 
-        public static readonly byte Text = 3;
+        public const byte Text = 3;
 
-        public static readonly byte Number = 4;
+        public const byte Number = 4;
 
-        public static readonly byte True = 5;
+        public const byte True = 5;
 
-        public static readonly byte False = 6;
+        public const byte False = 6;
 
-        public static readonly byte Null = 7;
+        public const byte Null = 7;
     }
 }

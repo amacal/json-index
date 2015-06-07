@@ -1,121 +1,182 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
 using NUnit.Framework;
 
 namespace JsonIndex
 {
+    [TestFixture]
     public class IndexFixture
     {
-        [TestFixture]
-        public class EmptyObject
+        [Test]
+        [TestCaseSource(typeof(JsonScenarioFactory), "Empty")]
+        public void IndexingAndVisitingShouldExtractTheStructure(JsonScenario scenario)
         {
-            public Index Index;
+            // arrange
+            Collector collector = new Collector();
+            Index index = Index.Build(scenario.Instance.Data);
 
-            [SetUp]
-            public void Initialize()
+            // act
+            index.Root.Accept(collector);
+
+            // assert
+            scenario.Constraint.Verify(collector);
+        }
+
+        public class JsonInstance
+        {
+            public string Name { get; set; }
+            
+            public string Data { get; set; }
+        }
+
+        public class Collector : JsonVisitor
+        {
+            private readonly List<string> propertyNames;
+            private readonly List<string> propertyData;
+
+            public Collector()
             {
-                this.Index = Index.Build("{}");
+                this.propertyNames = new List<string>();
+                this.propertyData = new List<string>();
             }
 
-            [Test]
-            public void ReturnsNotNull()
+            public IEnumerable<string> PropertyNames
             {
-                Assert.That(this.Index, Is.Not.Null);
+                get { return this.propertyNames; }
             }
 
-            [Test]
-            public void ContainsRoot()
+            public IEnumerable<string> PropertyData
             {
-                Assert.That(this.Index.Root, Is.Not.Null);
+                get { return this.propertyData; }
             }
 
-            [Test]
-            public void ContainsNoProperties()
+            public void Visit(JsonObject instance)
             {
-                Assert.That(this.Index.Root.Properties(), Is.Empty);
+                foreach (JsonProperty property in instance.GetProperties())
+                {
+                    property.Accept(this);
+                }
+            }
+
+            public void Visit(JsonProperty property)
+            {
+                this.propertyNames.Add(property.GetName());
+                this.propertyData.Add(property.GetText());
+
+                property.GetValue().Accept(this);
+            }
+
+            public void Visit(JsonArray array)
+            {
+                foreach (JsonNode node in array.GetItems())
+                {
+                    node.Accept(this);
+                }
+            }
+
+            public void Visit(JsonText text)
+            {
+            }
+
+            public void Visit(JsonNumber number)
+            {
+            }
+
+            public void Visit(JsonTrue value)
+            {
+            }
+
+            public void Visit(JsonFalse value)
+            {
+            }
+
+            public void Visit(JsonNull value)
+            {
+            }
+        }
+        
+        public interface JsonConstraint
+        {
+            string Describe();
+
+            void Verify(Collector collector);
+        }
+
+        public class JsonPropertyNameConstraint : JsonConstraint
+        {
+            private readonly string[] names;
+
+            public JsonPropertyNameConstraint(params string[] names)
+            {
+                this.names = names;
+            }
+
+            public string Describe()
+            {
+                return "property-names: " + String.Join(", ", this.names);
+            }
+
+            public void Verify(Collector collector)
+            {
+                Assert.That(collector.PropertyNames, Is.EquivalentTo(this.names));
             }
         }
 
-        [TestFixture]
-        public class SingleTextPropertyObject
+        public class JsonPropertyDataConstraint : JsonConstraint
         {
-            public Index Index;
+            private readonly string[] data;
 
-            [SetUp]
-            public void Initialize()
+            public JsonPropertyDataConstraint(params string[] data)
             {
-                this.Index = Index.Build(@"{""property"":""abc""}");
+                this.data = data;
             }
 
-            [Test]
-            public void ReturnsNotNull()
+            public string Describe()
             {
-                Assert.That(this.Index, Is.Not.Null);
+                return "property-data: " + String.Join(", ", this.data);
             }
 
-            [Test]
-            public void ContainsRoot()
+            public void Verify(Collector collector)
             {
-                Assert.That(this.Index.Root, Is.Not.Null);
-            }
-
-            [Test]
-            public void ContainsOneProperty()
-            {
-                Assert.That(this.Index.Root.Properties().Count(), Is.EqualTo(1));
-            }
-
-            [Test]
-            public void ContainsPropertyWithNameProperty()
-            {
-                Assert.That(this.Index.Root.Properties(), Has.All.Matches<JProperty>(x => x.GetName() == "property"));
-            }
-
-            [Test]
-            public void ContainsPropertyWithValueAbc()
-            {
-                Assert.That(this.Index.Root.Properties(), Has.All.Matches<JProperty>(x => x.GetValue() == "abc"));
+                Assert.That(collector.PropertyData, Is.EquivalentTo(this.data));
             }
         }
 
-        [TestFixture]
-        public class SingleNumberPropertyObject
+        public class JsonScenario
         {
-            public Index Index;
+            public JsonInstance Instance { get; set; }
 
-            [SetUp]
-            public void Initialize()
+            public JsonConstraint Constraint { get; set; }
+
+            public override string ToString()
             {
-                this.Index = Index.Build(@"{""property"":123.456}");
+                return String.Join(" | ", this.Instance.Name, this.Constraint.Describe());
             }
+        }
 
-            [Test]
-            public void ReturnsNotNull()
+        public static class JsonScenarioFactory
+        {
+            public static IEnumerable<JsonScenario> Empty()
             {
-                Assert.That(this.Index, Is.Not.Null);
-            }
+                JsonInstance instance = new JsonInstance
+                {
+                    Name = "empty",
+                    Data = "{}"
+                };
 
-            [Test]
-            public void ContainsRoot()
-            {
-                Assert.That(this.Index.Root, Is.Not.Null);
-            }
+                yield return new JsonScenario
+                {
+                    Instance = instance,
+                    Constraint = new JsonPropertyNameConstraint()
+                };
 
-            [Test]
-            public void ContainsOneProperty()
-            {
-                Assert.That(this.Index.Root.Properties().Count(), Is.EqualTo(1));
-            }
-
-            [Test]
-            public void ContainsPropertyWithNameProperty()
-            {
-                Assert.That(this.Index.Root.Properties(), Has.All.Matches<JProperty>(x => x.GetName() == "property"));
-            }
-
-            [Test]
-            public void ContainsPropertyWithValue123456()
-            {
-                Assert.That(this.Index.Root.Properties(), Has.All.Matches<JProperty>(x => x.GetValue() == "123.456"));
+                yield return new JsonScenario
+                {
+                    Instance = instance,
+                    Constraint = new JsonPropertyDataConstraint()
+                };
             }
         }
     }

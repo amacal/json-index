@@ -43,8 +43,17 @@
     <Compile Include="IndexEntry.cs" />
     <Compile Include="IndexFixture.cs" />
     <Compile Include="IndexType.cs" />
-    <Compile Include="JObject.cs" />
-    <Compile Include="JProperty.cs" />
+    <Compile Include="JsonArray.cs" />
+    <Compile Include="JsonContainer.cs" />
+    <Compile Include="JsonFalse.cs" />
+    <Compile Include="JsonNode.cs" />
+    <Compile Include="JsonNull.cs" />
+    <Compile Include="JsonNumber.cs" />
+    <Compile Include="JsonObject.cs" />
+    <Compile Include="JsonProperty.cs" />
+    <Compile Include="JsonVisitor.cs" />
+    <Compile Include="JsonText.cs" />
+    <Compile Include="JsonTrue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

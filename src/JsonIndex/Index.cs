@@ -14,9 +14,9 @@ namespace JsonIndex
             this.entries = new IndexEntry[1024];
         }
 
-        public JObject Root
+        public JsonObject Root
         {
-            get { return new JObject(this, 0); }
+            get { return new JsonObject(this, 0); }
         }
 
         public string GetData(int index)
