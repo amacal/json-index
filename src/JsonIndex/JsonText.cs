@@ -15,5 +15,10 @@
         {
             visitor.Visit(this);
         }
+
+        public string GetValue()
+        {
+            return this.index.GetData(this.offset);
+        }
     }
 }

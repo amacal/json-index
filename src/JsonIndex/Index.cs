@@ -8,7 +8,7 @@ namespace JsonIndex
         private readonly IndexEntry[] entries;
         private int total;
 
-        public Index(string data)
+        internal Index(string data)
         {
             this.data = data;
             this.entries = new IndexEntry[1024];
@@ -19,7 +19,7 @@ namespace JsonIndex
             get { return new JsonObject(this, 0); }
         }
 
-        public string GetData(int index)
+        internal string GetData(int index)
         {
             IndexEntry entry = this.entries[index];
             string data = this.data.Substring(entry.Start, entry.End - entry.Start + 1);
@@ -27,17 +27,17 @@ namespace JsonIndex
             return data;
         }
 
-        public IndexEntry this[int index]
+        internal IndexEntry this[int index]
         {
             get { return this.entries[index]; }
         }
 
-        public void End(int index, int end)
+        internal void End(int index, int end)
         {
             this.entries[index].End = end;
         }
 
-        public int New(byte type, int parent, int start, int end)
+        internal int New(byte type, int parent, int start, int end)
         {
             IndexEntry entry = new IndexEntry();
 

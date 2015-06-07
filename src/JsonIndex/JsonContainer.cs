@@ -6,19 +6,19 @@ namespace JsonIndex
     {
         public static JsonNode GetValue(Index index, int offset)
         {
-            switch (index[offset + 1].Type)
+            switch (index[offset].Type)
             {
                 case IndexType.Object:
-                    return new JsonObject(index, offset + 1);
+                    return new JsonObject(index, offset);
 
                 case IndexType.Array:
-                    return new JsonArray(index, offset + 1);
+                    return new JsonArray(index, offset);
 
                 case IndexType.Text:
-                    return new JsonText(index, offset + 1);
+                    return new JsonText(index, offset);
 
                 case IndexType.Number:
-                    return new JsonNumber(index, offset + 1);
+                    return new JsonNumber(index, offset);
 
                 case IndexType.True:
                     return new JsonTrue();

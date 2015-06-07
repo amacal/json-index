@@ -21,7 +21,14 @@ namespace JsonIndex
 
         public IEnumerable<JsonNode> GetItems()
         {
-            return Enumerable.Empty<JsonNode>();
+            IndexEntry entry = this.index[this.offset];
+            int child = entry.First;
+
+            while (child > 0)
+            {
+                yield return JsonContainer.GetValue(this.index, child);
+                child = this.index[child].Next;
+            }
         }
     }
 }

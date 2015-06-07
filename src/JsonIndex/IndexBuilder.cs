@@ -2,7 +2,7 @@
 
 namespace JsonIndex
 {
-    public class IndexBuilder
+    internal class IndexBuilder
     {
         private readonly Index index;
         private readonly string data;
@@ -232,13 +232,16 @@ namespace JsonIndex
                 if (position < data.Length && data[position] != character)
                 {
                     position = data.Length;
+                    break;
                 }
+
+                position++;
             }
         }
 
         private void Skip(char character)
         {
-            if (position < data.Length && position == character)
+            if (position < data.Length && data[position] == character)
             {
                 position++;
             }
