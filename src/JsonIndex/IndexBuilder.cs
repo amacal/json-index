@@ -10,7 +10,7 @@ namespace JsonIndex
 
         public IndexBuilder(string data)
         {
-            this.index = new Index();
+            this.index = new Index(data);
             this.data = data;
             this.position = 0;
         }
@@ -213,7 +213,7 @@ namespace JsonIndex
         {
             if (position < data.Length)
             {
-                index.New(type, parent, position - 4, position - 1);
+                index.New(type, parent, start, end);
             }
         }
 

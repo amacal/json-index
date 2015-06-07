@@ -4,11 +4,13 @@ namespace JsonIndex
 {
     public class Index
     {
+        private readonly string data;
         private readonly IndexEntry[] entries;
         private int total;
 
-        public Index()
+        public Index(string data)
         {
+            this.data = data;
             this.entries = new IndexEntry[1024];
         }
 
@@ -17,15 +19,17 @@ namespace JsonIndex
             get { return new JObject(this, 0); }
         }
 
+        public string GetData(int index)
+        {
+            IndexEntry entry = this.entries[index];
+            string data = this.data.Substring(entry.Start, entry.End - entry.Start + 1);
+
+            return data;
+        }
+
         public IndexEntry this[int index]
         {
             get { return this.entries[index]; }
-        }
-
-        public void Add(int parent, int child)
-        {
-            IndexEntry entry = this.entries[parent];
-
         }
 
         public void End(int index, int end)

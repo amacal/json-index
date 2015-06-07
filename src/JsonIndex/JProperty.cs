@@ -13,12 +13,12 @@
 
         public string GetName()
         {
-            return null;
+            return this.index.GetData(this.offset);
         }
 
         public string GetValue()
         {
-            return null;
+            return this.index.GetData(this.offset + 1);
         }
     }
 }
