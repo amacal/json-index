@@ -37,5 +37,10 @@ namespace JsonIndex
                 count++;
             }
         }
+
+        public override string ToString()
+        {
+            return this.index.GetData(this.offset);
+        }
     }
 }

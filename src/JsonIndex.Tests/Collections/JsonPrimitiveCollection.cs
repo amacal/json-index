@@ -1,4 +1,4 @@
-﻿namespace JsonIndex.Tests
+﻿namespace JsonIndex.Tests.Collections
 {
     public class JsonPrimitiveCollection
     {

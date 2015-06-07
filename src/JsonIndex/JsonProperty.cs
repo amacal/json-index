@@ -23,14 +23,14 @@ namespace JsonIndex
             return this.index.GetData(this.offset);
         }
 
-        public string GetText()
-        {
-            return this.index.GetData(this.offset + 1);
-        }
-
         public JsonNode GetValue()
         {
             return JsonContainer.GetValue(this.index, this.offset + 1);
+        }
+
+        public override string ToString()
+        {
+            return this.index.GetData(this.offset + 1);
         }
     }
 }

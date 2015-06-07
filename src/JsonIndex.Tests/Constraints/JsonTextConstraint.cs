@@ -19,7 +19,7 @@ namespace JsonIndex.Tests.Constraints
 
         public void Verify(JsonCollector collector)
         {
-            Assert.That(collector.Texts, Is.EquivalentTo(this.texts));
+            Assert.That(collector.Texts.Items, Is.EquivalentTo(this.texts));
         }
     }
 }

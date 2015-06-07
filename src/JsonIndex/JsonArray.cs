@@ -30,5 +30,10 @@ namespace JsonIndex
                 child = this.index[child].Next;
             }
         }
+
+        public override string ToString()
+        {
+            return this.index.GetData(this.offset);
+        }
     }
 }

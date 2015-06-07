@@ -20,5 +20,10 @@
         {
             return this.index.GetData(this.offset);
         }
+
+        public override string ToString()
+        {
+            return this.index.GetData(this.offset);
+        }
     }
 }

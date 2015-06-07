@@ -22,7 +22,7 @@ namespace JsonIndex.Tests.Scenarios
             yield return new JsonScenario
             {
                 Instance = instance,
-                Constraint = new JsonDataConstraint("123", "123.456", "-123", "12.13e-7")
+                Constraint = new JsonDataConstraint("123", "123.456", "-123", "12.13e-7", @"{""prop-a"":123,""prop-b"":123.456,""prop-c"":-123,""prop-d"":12.13e-7}")
             };
 
             yield return new JsonScenario

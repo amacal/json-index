@@ -1,40 +1,41 @@
 ﻿using System.Collections.Generic;
+using JsonIndex.Tests.Collections;
 
 namespace JsonIndex.Tests
 {
     public class JsonCollector : JsonVisitor
     {
-        private readonly List<string> data;
-        private readonly List<string> names;
-        private readonly List<string> texts;
-        private readonly List<string> numbers;
+        private readonly JsonDataCollection data;
+        private readonly JsonNameCollection names;
+        private readonly JsonTextCollection texts;
+        private readonly JsonNumberCollection numbers;
         private readonly JsonPrimitiveCollection primitives;
 
         public JsonCollector()
         {
-            this.data = new List<string>();
-            this.names = new List<string>();
-            this.texts = new List<string>();
-            this.numbers = new List<string>();
+            this.data = new JsonDataCollection();
+            this.names = new JsonNameCollection();
+            this.texts = new JsonTextCollection();
+            this.numbers = new JsonNumberCollection();
             this.primitives = new JsonPrimitiveCollection();
         }
 
-        public IEnumerable<string> Data
+        public JsonDataCollection Data
         {
             get { return this.data; }
         }
 
-        public IEnumerable<string> Names
+        public JsonNameCollection Names
         {
             get { return this.names; }
         }
 
-        public IEnumerable<string> Texts
+        public JsonTextCollection Texts
         {
             get { return this.texts; }
         }
 
-        public IEnumerable<string> Numbers
+        public JsonNumberCollection Numbers
         {
             get { return this.numbers; }
         }
@@ -46,6 +47,8 @@ namespace JsonIndex.Tests
 
         public void Visit(JsonObject instance)
         {
+            this.data.Add(instance);
+
             foreach (JsonProperty property in instance.GetProperties())
             {
                 property.Accept(this);
@@ -54,14 +57,16 @@ namespace JsonIndex.Tests
 
         public void Visit(JsonProperty property)
         {
-            this.names.Add(property.GetName());
-            this.data.Add(property.GetText());
+            this.names.Add(property);
+            this.data.Add(property);
 
             property.GetValue().Accept(this);
         }
 
         public void Visit(JsonArray array)
         {
+            this.data.Add(array);
+
             foreach (JsonNode node in array.GetItems())
             {
                 node.Accept(this);
@@ -70,12 +75,12 @@ namespace JsonIndex.Tests
 
         public void Visit(JsonText text)
         {
-            this.texts.Add(text.GetValue());
+            this.texts.Add(text);
         }
 
         public void Visit(JsonNumber number)
         {
-            this.numbers.Add(number.GetValue());
+            this.numbers.Add(number);
         }
 
         public void Visit(JsonTrue value)

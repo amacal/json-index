@@ -16,7 +16,7 @@ namespace JsonIndex.Tests.Scenarios
             yield return new JsonScenario
             {
                 Instance = instance,
-                Constraint = new JsonDataConstraint("[]")
+                Constraint = new JsonDataConstraint(@"{""property"":[]}", "[]")
             };
 
             yield return new JsonScenario
