@@ -39,9 +39,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Collections\JsonDataCollection.cs" />
+    <Compile Include="Collections\JsonItemCollection.cs" />
     <Compile Include="Collections\JsonNameCollection.cs" />
     <Compile Include="Collections\JsonNumberCollection.cs" />
     <Compile Include="Collections\JsonTextCollection.cs" />
+    <Compile Include="Constraints\JsonArrayConstraint.cs" />
     <Compile Include="Constraints\JsonBooleanConstraint.cs" />
     <Compile Include="Constraints\JsonNullConstraint.cs" />
     <Compile Include="IndexFixture.cs" />

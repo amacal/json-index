@@ -8,6 +8,8 @@
 
         void Visit(JsonArray array);
 
+        void Visit(JsonItem item);
+
         void Visit(JsonText text);
 
         void Visit(JsonNumber number);

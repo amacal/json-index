@@ -23,11 +23,13 @@ namespace JsonIndex
         {
             IndexEntry entry = this.index[this.offset];
             int child = entry.First;
+            int count = 0;
 
             while (child > 0)
             {
-                yield return JsonContainer.GetValue(this.index, child);
+                yield return new JsonItem(this.index, child, count);
                 child = this.index[child].Next;
+                count++;
             }
         }
 
