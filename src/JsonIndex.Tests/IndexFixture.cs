@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using NUnit.Framework;
+using JsonIndex.Tests.Scenarios;
 
 namespace JsonIndex.Tests
 {
@@ -10,11 +11,11 @@ namespace JsonIndex.Tests
     public class IndexFixture
     {
         [Test]
-        [TestCaseSource(typeof(JsonScenarioFactory), "EmptyObject")]
-        [TestCaseSource(typeof(JsonScenarioFactory), "EmptyArray")]
-        [TestCaseSource(typeof(JsonScenarioFactory), "TextProperties")]
-        [TestCaseSource(typeof(JsonScenarioFactory), "NumberProperties")]
-        [TestCaseSource(typeof(JsonScenarioFactory), "MixedArray")]
+        [TestCaseSource(typeof(ArrayScenario), "Empty")]
+        [TestCaseSource(typeof(ArrayScenario), "Mixed")]
+        [TestCaseSource(typeof(NumberScenario), "Default")]
+        [TestCaseSource(typeof(ObjectScenario), "Empty")]
+        [TestCaseSource(typeof(TextScenario), "Default")]
         public void IndexingAndVisitingShouldExtractTheStructure(JsonScenario scenario)
         {
             // arrange

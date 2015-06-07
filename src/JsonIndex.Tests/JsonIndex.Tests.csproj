@@ -41,14 +41,17 @@
     <Compile Include="IndexFixture.cs" />
     <Compile Include="JsonCollector.cs" />
     <Compile Include="JsonConstraint.cs" />
-    <Compile Include="JsonDataConstraint.cs" />
+    <Compile Include="Constraints\JsonDataConstraint.cs" />
     <Compile Include="JsonInstance.cs" />
-    <Compile Include="JsonNameConstraint.cs" />
-    <Compile Include="JsonNumberConstraint.cs" />
+    <Compile Include="Constraints\JsonNameConstraint.cs" />
+    <Compile Include="Constraints\JsonNumberConstraint.cs" />
     <Compile Include="JsonScenario.cs" />
-    <Compile Include="JsonScenarioFactory.cs" />
-    <Compile Include="JsonTextConstraint.cs" />
+    <Compile Include="Constraints\JsonTextConstraint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scenarios\ArrayScenario.cs" />
+    <Compile Include="Scenarios\ObjectScenario.cs" />
+    <Compile Include="Scenarios\NumberScenario.cs" />
+    <Compile Include="Scenarios\TextScenario.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

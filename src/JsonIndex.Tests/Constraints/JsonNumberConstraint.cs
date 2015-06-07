@@ -1,7 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 
-namespace JsonIndex.Tests
+namespace JsonIndex.Tests.Constraints
 {
     public class JsonNumberConstraint : JsonConstraint
     {
