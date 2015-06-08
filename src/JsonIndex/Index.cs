@@ -1,17 +1,19 @@
-﻿using System;
+﻿using System.Collections.Generic;
 
 namespace JsonIndex
 {
     public class Index
     {
+        private const int BucketSize = 10240;
+
         private readonly string data;
-        private readonly IndexEntry[] entries;
+        private readonly List<IndexEntry[]> entries;
         private int total;
 
         internal Index(string data)
         {
             this.data = data;
-            this.entries = new IndexEntry[1024];
+            this.entries = new List<IndexEntry[]>();
         }
 
         public JsonObject Root
@@ -21,7 +23,7 @@ namespace JsonIndex
 
         internal string GetData(int index)
         {
-            IndexEntry entry = this.entries[index];
+            IndexEntry entry = this.entries[index / BucketSize][index % BucketSize];
             string data = this.data.Substring(entry.Start, entry.End - entry.Start + 1);
 
             return data;
@@ -29,26 +31,28 @@ namespace JsonIndex
 
         internal IndexEntry this[int index]
         {
-            get { return this.entries[index]; }
+            get { return this.entries[index / BucketSize][index % BucketSize]; }
         }
 
         internal void End(int index, int end)
         {
-            this.entries[index].End = end;
+            this.entries[index / BucketSize][index % BucketSize].End = end;
         }
 
         internal int New(byte type, int parent, int start, int end)
         {
-            IndexEntry entry = new IndexEntry();
-
-            entry.Type = type;
-            entry.Parent = parent;
-            entry.Start = start;
-            entry.End = end;
+            int current = total;
+            IndexEntry entry = new IndexEntry
+            {
+                Type = type,
+                Parent = parent,
+                Start = start,
+                End = end
+            };
 
             if (parent >= 0)
             {
-                IndexEntry owner = this.entries[parent];
+                IndexEntry owner = this.entries[parent / BucketSize][parent % BucketSize];
 
                 if (owner.First == 0)
                 {
@@ -57,15 +61,22 @@ namespace JsonIndex
 
                 if (owner.Last > 0)
                 {
-                    this.entries[owner.Last].Next = total;
+                    this.entries[owner.Last / BucketSize][owner.Last % BucketSize].Next = total;
                 }
 
                 owner.Last = total;
-                this.entries[parent] = owner;
+                this.entries[parent / BucketSize][parent % BucketSize] = owner;
             }
 
-            this.entries[total] = entry;
-            return total++;
+            if (current == 0)
+            {
+                this.entries.Add(new IndexEntry[BucketSize]);
+            }
+
+            this.entries[total / BucketSize][total % BucketSize] = entry;
+            this.total = (total + 1) % BucketSize;
+
+            return current;
         }
 
         public static Index Build(string data)
