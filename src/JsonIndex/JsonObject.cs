@@ -19,22 +19,13 @@ namespace JsonIndex
             visitor.Visit(this);
         }
 
-        public IEnumerable<JsonProperty> GetProperties()
+        public JsonPropertyCollection Properties
         {
-            IndexEntry entry = this.index[this.offset];
-
-            int child = entry.First;
-            int count = 0;
-
-            while (child > 0)
+            get
             {
-                if (count % 2 == 0)
-                {
-                    yield return new JsonProperty(this.index, child);
-                }
+                IndexEntry entry = this.index[this.offset];
 
-                child = this.index[child].Next;
-                count++;
+                return new JsonPropertyCollection(this.index, entry.First);
             }
         }
 

@@ -42,10 +42,12 @@
     <Compile Include="Collections\JsonItemCollection.cs" />
     <Compile Include="Collections\JsonNameCollection.cs" />
     <Compile Include="Collections\JsonNumberCollection.cs" />
+    <Compile Include="Collections\JsonObjectCollection.cs" />
     <Compile Include="Collections\JsonTextCollection.cs" />
     <Compile Include="Constraints\JsonArrayConstraint.cs" />
     <Compile Include="Constraints\JsonBooleanConstraint.cs" />
     <Compile Include="Constraints\JsonNullConstraint.cs" />
+    <Compile Include="Constraints\JsonPropertyConstraint.cs" />
     <Compile Include="IndexFixture.cs" />
     <Compile Include="JsonCollector.cs" />
     <Compile Include="JsonConstraint.cs" />

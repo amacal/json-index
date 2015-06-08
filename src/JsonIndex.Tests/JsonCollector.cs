@@ -9,6 +9,7 @@ namespace JsonIndex.Tests
         private readonly JsonNameCollection names;
         private readonly JsonTextCollection texts;
         private readonly JsonItemCollection items;
+        private readonly JsonObjectCollection objects;
         private readonly JsonNumberCollection numbers;
         private readonly JsonPrimitiveCollection primitives;
 
@@ -18,6 +19,7 @@ namespace JsonIndex.Tests
             this.names = new JsonNameCollection();
             this.texts = new JsonTextCollection();
             this.items = new JsonItemCollection();
+            this.objects = new JsonObjectCollection();
             this.numbers = new JsonNumberCollection();
             this.primitives = new JsonPrimitiveCollection();
         }
@@ -42,6 +44,11 @@ namespace JsonIndex.Tests
             get { return this.items; }
         }
 
+        public JsonObjectCollection Objects
+        {
+            get { return this.objects; }
+        }
+
         public JsonNumberCollection Numbers
         {
             get { return this.numbers; }
@@ -55,8 +62,9 @@ namespace JsonIndex.Tests
         public void Visit(JsonObject instance)
         {
             this.data.Add(instance);
+            this.objects.Add(instance);
 
-            foreach (JsonProperty property in instance.GetProperties())
+            foreach (JsonProperty property in instance.Properties)
             {
                 property.Accept(this);
             }

@@ -16,6 +16,11 @@ namespace JsonIndex
             this.entries = new List<IndexEntry[]>();
         }
 
+        internal string Data
+        {
+            get { return this.data; }
+        }
+
         public JsonObject Root
         {
             get { return new JsonObject(this, 0); }
