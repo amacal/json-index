@@ -17,6 +17,7 @@ namespace JsonIndex.Tests
         [TestCaseSource(typeof(ObjectScenario), "Empty")]
         [TestCaseSource(typeof(ObjectScenario), "Mixed")]
         [TestCaseSource(typeof(TextScenario), "Default")]
+        [TestCaseSource(typeof(TextScenario), "Escape")]
         public void IndexingAndVisitingShouldExtractTheStructure(JsonScenario scenario)
         {
             // arrange

@@ -148,6 +148,11 @@ namespace JsonIndex
 
             while (position < data.Length && data[position] != '"')
             {
+                if (data[position] == '\\')
+                {
+                    position++;
+                }
+
                 position++;
             }
 

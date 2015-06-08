@@ -31,5 +31,20 @@ namespace JsonIndex.Tests.Scenarios
                 Constraint = new JsonTextConstraint("value-a", "value-b")
             };
         }
+
+        public static IEnumerable<JsonScenario> Escape()
+        {
+            JsonInstance instance = new JsonInstance
+            {
+                Name = "text-escape",
+                Data = @"{""prop-a"":""\"""",""\\"":""\uabcdefgh"",""prop-c"":""""}"
+            };
+
+            yield return new JsonScenario
+            {
+                Instance = instance,
+                Constraint = new JsonTextConstraint("\\\"", "\\uabcdefgh", "")
+            };
+        }
     }
 }
