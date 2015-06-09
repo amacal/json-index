@@ -1,14 +1,14 @@
 ﻿namespace JsonIndex
 {
-    public struct IndexEntry
+    internal struct IndexEntry
     {
         public byte Type;
 
-        public int Parent;
         public int First;
-        public int Last;
         public int Next;
+        public int Last;
 
+        public int Hash;
         public int Start;
         public int End;
     }

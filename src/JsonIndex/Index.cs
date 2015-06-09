@@ -4,7 +4,7 @@ namespace JsonIndex
 {
     public class Index
     {
-        private const int BucketSize = 10240;
+        private const int BucketSize = 16384;
 
         private readonly string data;
         private readonly List<IndexEntry[]> entries;
@@ -28,7 +28,7 @@ namespace JsonIndex
 
         internal string GetData(int index)
         {
-            IndexEntry entry = this.entries[index / BucketSize][index % BucketSize];
+            IndexEntry entry = this[index];
             string data = this.data.Substring(entry.Start, entry.End - entry.Start + 1);
 
             return data;
@@ -37,6 +37,7 @@ namespace JsonIndex
         internal IndexEntry this[int index]
         {
             get { return this.entries[index / BucketSize][index % BucketSize]; }
+            private set { this.entries[index / BucketSize][index % BucketSize] = value; }
         }
 
         internal void End(int index, int end)
@@ -50,14 +51,13 @@ namespace JsonIndex
             IndexEntry entry = new IndexEntry
             {
                 Type = type,
-                Parent = parent,
                 Start = start,
                 End = end
             };
 
             if (parent >= 0)
             {
-                IndexEntry owner = this.entries[parent / BucketSize][parent % BucketSize];
+                IndexEntry owner = this[parent];
 
                 if (owner.First == 0)
                 {
@@ -70,7 +70,7 @@ namespace JsonIndex
                 }
 
                 owner.Last = total;
-                this.entries[parent / BucketSize][parent % BucketSize] = owner;
+                this[parent] = owner;
             }
 
             if (current == 0)
@@ -78,10 +78,59 @@ namespace JsonIndex
                 this.entries.Add(new IndexEntry[BucketSize]);
             }
 
-            this.entries[total / BucketSize][total % BucketSize] = entry;
+            this[total] = entry;
             this.total = (total + 1) % BucketSize;
 
             return current;
+        }
+
+        internal int Hash(string name)
+        {
+            int hash = 0;
+
+            for (int i = 0; i < name.Length; i++)
+            {
+                hash = 31 * hash + name[i];
+            }
+
+            return hash;
+        }
+
+        internal int Hash(int index)
+        {
+            IndexEntry entry = this[index];
+            int hash = entry.Hash;
+
+            if (hash == 0)
+            {
+                for (int i = entry.Start; i <= entry.End; i++)
+                {
+                    hash = 31 * hash + this.data[i];
+                }
+
+                entry.Hash = hash;
+                this[index] = entry;
+            }
+
+            return hash;
+        }
+
+        internal bool Equals(string name, IndexEntry entry)
+        {
+            if (entry.End - entry.Start != name.Length - 1)
+            {
+                return false;
+            }
+
+            for (int i = 0, j = entry.Start; i < name.Length; i++, j++)
+            {
+                if (name[i] != this.data[j])
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         public static Index Build(string data)

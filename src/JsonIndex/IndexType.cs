@@ -1,6 +1,6 @@
 ﻿namespace JsonIndex
 {
-    public static class IndexType
+    internal static class IndexType
     {
         public const byte Object = 1;
 
