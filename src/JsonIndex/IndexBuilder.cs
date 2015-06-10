@@ -9,9 +9,9 @@ namespace JsonIndex
         private readonly string data;
         private int position;
 
-        public IndexBuilder(string data)
+        public IndexBuilder(string data, IndexSettings settings)
         {
-            this.index = new Index(data);
+            this.index = new Index(data, settings);
             this.data = data;
             this.position = 0;
         }

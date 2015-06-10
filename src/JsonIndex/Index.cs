@@ -4,15 +4,15 @@ namespace JsonIndex
 {
     public class Index
     {
-        private const int BucketSize = 16384;
-
         private readonly string data;
+        private readonly IndexSettings settings;
         private readonly List<IndexEntry[]> entries;
         private int total;
 
-        internal Index(string data)
+        internal Index(string data, IndexSettings settings)
         {
             this.data = data;
+            this.settings = settings;
             this.entries = new List<IndexEntry[]>();
         }
 
@@ -36,13 +36,13 @@ namespace JsonIndex
 
         internal IndexEntry this[int index]
         {
-            get { return this.entries[index / BucketSize][index % BucketSize]; }
-            private set { this.entries[index / BucketSize][index % BucketSize] = value; }
+            get { return this.entries[index / this.settings.BucketSize][index % this.settings.BucketSize]; }
+            private set { this.entries[index / this.settings.BucketSize][index % this.settings.BucketSize] = value; }
         }
 
         internal void End(int index, int end)
         {
-            this.entries[index / BucketSize][index % BucketSize].End = end;
+            this.entries[index / this.settings.BucketSize][index % this.settings.BucketSize].End = end;
         }
 
         internal int New(byte type, int parent, int start, int end)
@@ -66,20 +66,20 @@ namespace JsonIndex
 
                 if (owner.Last > 0)
                 {
-                    this.entries[owner.Last / BucketSize][owner.Last % BucketSize].Next = total;
+                    this.entries[owner.Last / this.settings.BucketSize][owner.Last % this.settings.BucketSize].Next = total;
                 }
 
                 owner.Last = total;
                 this[parent] = owner;
             }
 
-            if (current == 0)
+            if (current % this.settings.BucketSize == 0)
             {
-                this.entries.Add(new IndexEntry[BucketSize]);
+                this.entries.Add(new IndexEntry[this.settings.BucketSize]);
             }
 
             this[total] = entry;
-            this.total = (total + 1) % BucketSize;
+            this.total = total + 1;
 
             return current;
         }
@@ -135,7 +135,15 @@ namespace JsonIndex
 
         public static Index Build(string data)
         {
-            IndexBuilder builder = new IndexBuilder(data);
+            IndexBuilder builder = new IndexBuilder(data, new IndexSettings());
+            Index index = builder.Build();
+
+            return index;
+        }
+
+        public static Index Build(string data, IndexSettings settings)
+        {
+            IndexBuilder builder = new IndexBuilder(data, settings);
             Index index = builder.Build();
 
             return index;

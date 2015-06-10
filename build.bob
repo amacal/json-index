@@ -67,7 +67,7 @@ public class Build : IBob
             parameters.Specification = NuGet.Specification.Inline(package =>
             {
                 package.Id = "json-index";
-                package.Version = "0.1.0-dev8";
+                package.Version = "0.1.0-dev9";
                 package.Authors = "Adrian Macal";
                 package.Description = "JSON indexing library";
                 package.Files["lib\\net45"] = FileSystem.Files.Match("build\\output\\JsonIndex.dll");
