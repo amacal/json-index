@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using JsonIndex.Tests.Scenarios;
 
 namespace JsonIndex.Tests
@@ -18,6 +14,7 @@ namespace JsonIndex.Tests
         [TestCaseSource(typeof(ObjectScenario), "Mixed")]
         [TestCaseSource(typeof(TextScenario), "Default")]
         [TestCaseSource(typeof(TextScenario), "Escape")]
+        [TestCaseSource(typeof(TextScenario), "ByteOrderMark")]
         public void IndexingAndVisitingShouldExtractTheStructure(JsonScenario scenario)
         {
             // arrange

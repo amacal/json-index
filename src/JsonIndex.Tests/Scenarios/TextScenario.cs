@@ -46,5 +46,20 @@ namespace JsonIndex.Tests.Scenarios
                 Constraint = new JsonTextConstraint("\\\"", "\\uabcdefgh", "")
             };
         }
+
+        public static IEnumerable<JsonScenario> ByteOrderMark()
+        {
+            JsonInstance instance = new JsonInstance
+            {
+                Name = "text-escape",
+                Data = "\ufeff\u200b" + @"{""prop-a"":""abc""}"
+            };
+
+            yield return new JsonScenario
+            {
+                Instance = instance,
+                Constraint = new JsonTextConstraint("abc")
+            };
+        }
     }
 }

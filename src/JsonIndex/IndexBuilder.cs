@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace JsonIndex
 {
@@ -17,6 +18,7 @@ namespace JsonIndex
 
         public Index Build()
         {
+            SkipByteOrderMark();
             SkipWhiteCharacters();
             ParseObject(-1);
 
@@ -36,6 +38,11 @@ namespace JsonIndex
                 SkipWhiteCharacters();
                 Skip(',');
                 SkipWhiteCharacters();
+            }
+
+            if (position >= data.Length)
+            {
+                throw new IndexException("The parser required '}', but found end of data.");
             }
 
             if (position < data.Length)
@@ -77,6 +84,11 @@ namespace JsonIndex
                 SkipWhiteCharacters();
                 Skip(',');
                 SkipWhiteCharacters();
+            }
+
+            if (position >= data.Length)
+            {
+                throw new IndexException("The parser required ']', but found end of data.");
             }
 
             if (position < data.Length)
@@ -136,7 +148,7 @@ namespace JsonIndex
                         break;
 
                     default:
-                        return;
+                        throw new IndexException(String.Format("The parser required beginning of the value, but found unknown character. position={0}; character={1}", position, data[position]));
                 }
             }
         }
@@ -154,6 +166,11 @@ namespace JsonIndex
                 }
 
                 position++;
+            }
+
+            if (position >= data.Length)
+            {
+                throw new IndexException("The parser required '\"', but found end of data.");
             }
 
             if (position < data.Length)
@@ -226,7 +243,12 @@ namespace JsonIndex
         {
             if (position < data.Length)
             {
-                position = data[position] != character ? data.Length : position + 1;
+                if (data[position] != character)
+                {
+                    throw new IndexException(String.Format("The parser required character. position={0}; character={1}", position, data[position]));
+                }
+
+                position++;
             }
         }
 
@@ -236,8 +258,7 @@ namespace JsonIndex
             {
                 if (position < data.Length && data[position] != character)
                 {
-                    position = data.Length;
-                    break;
+                    throw new IndexException(String.Format("The parser required sequence '{0}'. position={1}; character={2}", characters, position, data[position]));
                 }
 
                 position++;
@@ -255,6 +276,14 @@ namespace JsonIndex
         private void SkipWhiteCharacters()
         {
             while (position < data.Length && Char.IsWhiteSpace(data[position]) == true)
+            {
+                position++;
+            }
+        }
+
+        private void SkipByteOrderMark()
+        {
+            while (position < data.Length && Char.GetUnicodeCategory(data[position]) == UnicodeCategory.Format)
             {
                 position++;
             }
