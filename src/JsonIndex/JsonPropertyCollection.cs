@@ -18,29 +18,27 @@ namespace JsonIndex
         {
             get
             {
-                int child = this.offset;
-                int count = 0;
-
                 int hash = this.index.Hash(name);
-                IndexEntry entry = this.index[child];
+                int previous = this.offset, child = this.offset;
+                IndexEntry entry;
 
                 while (child > 0)
                 {
-                    if (count % 2 == 0)
+                    entry = this.index[child];
+
+                    if (entry.Type != IndexType.Property)
                     {
-                        if (hash == this.index.Hash(child))
+                        if (hash == this.index.Hash(previous))
                         {
-                            if (this.index.Equals(name, entry) == true)
+                            if (this.index.Equals(name, this.index[previous]) == true)
                             {
-                                return new JsonProperty(this.index, child);
+                                return new JsonProperty(this.index, previous);
                             }
                         }
                     }
 
+                    previous = child;
                     child = entry.Next;
-                    entry = this.index[child];
-
-                    count++;
                 }
 
                 return null;
@@ -49,18 +47,20 @@ namespace JsonIndex
 
         public IEnumerator<JsonProperty> GetEnumerator()
         {
-            int child = this.offset;
-            int count = 0;
+            int previous = this.offset, child = this.offset;
+            IndexEntry entry;
 
             while (child > 0)
             {
-                if (count % 2 == 0)
+                entry = this.index[child];
+
+                if (entry.Type != IndexType.Property)
                 {
-                    yield return new JsonProperty(this.index, child);
+                    yield return new JsonProperty(this.index, previous);
                 }
 
-                child = this.index[child].Next;
-                count++;
+                previous = child;
+                child = entry.Next;
             }
         }
 

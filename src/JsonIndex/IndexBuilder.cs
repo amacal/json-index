@@ -63,7 +63,7 @@ namespace JsonIndex
 
         private void ParsePropertyName(int parent)
         {
-            ParseText(parent);
+            ParseText(parent, IndexType.Property);
         }
 
         private void ParsePropertyValue(int parent)
@@ -153,7 +153,7 @@ namespace JsonIndex
             }
         }
 
-        private void ParseText(int parent)
+        private void ParseText(int parent, byte type = IndexType.Text)
         {
             int start = position + 1;
             Require('"');
@@ -176,7 +176,7 @@ namespace JsonIndex
             if (position < data.Length)
             {
                 Require('"');
-                Define(IndexType.Text, parent, start, position - 2);
+                Define(type, parent, start, position - 2);
             }
         }
 
@@ -207,7 +207,12 @@ namespace JsonIndex
                         break;
 
                     default:
-                        Define(IndexType.Number, parent, start, position - 1);
+
+                        if (this.index.Settings.IndexNumber == true)
+                        {
+                            Define(IndexType.Number, parent, start, position - 1);
+                        }
+
                         return;
                 }
             }
@@ -216,19 +221,31 @@ namespace JsonIndex
         private void ParseTrue(int parent)
         {
             RequireSequence("true");
-            Define(IndexType.True, parent, position - 4, position - 1);
+
+            if (this.index.Settings.IndexTrue == true)
+            {
+                Define(IndexType.True, parent, position - 4, position - 1);
+            }
         }
 
         private void ParseFalse(int parent)
         {
             RequireSequence("false");
-            Define(IndexType.False, parent, position - 5, position - 1);
+
+            if (this.index.Settings.IndexFalse == true)
+            {
+                Define(IndexType.False, parent, position - 5, position - 1);
+            }
         }
 
         private void ParseNull(int parent)
         {
             RequireSequence("null");
-            Define(IndexType.Null, parent, position - 4, position - 1);
+
+            if (this.index.Settings.IndexTrue == true)
+            {
+                Define(IndexType.Null, parent, position - 4, position - 1);
+            }
         }
 
         private void Define(byte type, int parent, int start, int end)

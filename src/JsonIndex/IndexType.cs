@@ -15,5 +15,7 @@
         public const byte False = 6;
 
         public const byte Null = 7;
+
+        public const byte Property = 8;
     }
 }

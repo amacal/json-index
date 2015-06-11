@@ -5,8 +5,8 @@ JSON indexing library.
 The library aims not to be used as a replacement for any deserializer. It just offers another faster low level way of reading the JSON.
 
 # Usage
-The following code is responsible to counting all occurrences of "hello-world" in all text nodes:
-```csahrp
+The following code is responsible for counting all occurrences of "hello-world" in all text nodes:
+```csharp
 using JsonIndex;
 
 public class HelloWorld
@@ -32,7 +32,7 @@ public class HelloWorldCounter : JsonVisitor
       property.Accept(this);
     }
   }
-  
+
   public int Count
   {
     get { return this.count; }

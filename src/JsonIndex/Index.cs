@@ -21,6 +21,11 @@ namespace JsonIndex
             get { return this.data; }
         }
 
+        internal IndexSettings Settings
+        {
+            get { return this.settings; }
+        }
+
         public JsonObject Root
         {
             get { return new JsonObject(this, 0); }
