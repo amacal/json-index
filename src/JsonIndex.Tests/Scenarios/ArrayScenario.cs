@@ -10,13 +10,13 @@ namespace JsonIndex.Tests.Scenarios
             JsonInstance instance = new JsonInstance
             {
                 Name = "array-empty",
-                Data = @"{""property"":[]}"
+                Data = "[]"
             };
 
             yield return new JsonScenario
             {
                 Instance = instance,
-                Constraint = new JsonDataConstraint(@"{""property"":[]}", "[]")
+                Constraint = new JsonDataConstraint("[]")
             };
 
             yield return new JsonScenario
@@ -55,7 +55,7 @@ namespace JsonIndex.Tests.Scenarios
             JsonInstance instance = new JsonInstance
             {
                 Name = "array-mixed",
-                Data = @"{""property"":[""abc"",123,true,false,null,{},[]]}"
+                Data = @"[""abc"",123,true,false,null,{},[]]"
             };
 
             yield return new JsonScenario

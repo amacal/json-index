@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace JsonIndex
 {
@@ -26,9 +27,22 @@ namespace JsonIndex
             get { return this.settings; }
         }
 
-        public JsonObject Root
+        public JsonNode Root
         {
-            get { return new JsonObject(this, 0); }
+            get 
+            {
+                switch(this[0].Type)
+                {
+                    case IndexType.Object:
+                        return new JsonObject(this, 0); 
+
+                    case IndexType.Array:
+                        return new JsonArray(this, 0);
+
+                    default:
+                        throw new NotSupportedException();
+                }
+            }
         }
 
         internal string GetData(int index)

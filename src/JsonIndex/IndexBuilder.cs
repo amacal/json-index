@@ -20,9 +20,29 @@ namespace JsonIndex
         {
             SkipByteOrderMark();
             SkipWhiteCharacters();
-            ParseObject(-1);
+            ParseObjectOrArray(-1);
 
             return this.index;
+        }
+
+        private void ParseObjectOrArray(int parent)
+        {
+            if (position < data.Length)
+            {
+                switch (data[position])
+                {
+                    case '{':
+                        ParseObject(parent);
+                        break;
+
+                    case '[':
+                        ParseArray(parent);
+                        break;
+
+                    default:
+                        throw new IndexException(String.Format("The parser required object or array, but found unknown character. position={0}; character={1}", position, data[position]));
+                }
+            }
         }
 
         private void ParseObject(int parent)
@@ -148,7 +168,7 @@ namespace JsonIndex
                         break;
 
                     default:
-                        throw new IndexException(String.Format("The parser required beginning of the value, but found unknown character. position={0}; character={1}", position, data[position]));
+                        throw new IndexException(String.Format("The parser required value, but found unknown character. position={0}; character={1}", position, data[position]));
                 }
             }
         }
@@ -262,7 +282,7 @@ namespace JsonIndex
             {
                 if (data[position] != character)
                 {
-                    throw new IndexException(String.Format("The parser required character. position={0}; character={1}", position, data[position]));
+                    throw new IndexException(String.Format("The parser required character {0}. position={1}; character={2}", character, position, data[position]));
                 }
 
                 position++;
