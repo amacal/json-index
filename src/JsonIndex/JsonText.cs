@@ -1,4 +1,6 @@
-﻿namespace JsonIndex
+﻿using System.Collections.Generic;
+
+namespace JsonIndex
 {
     public class JsonText : JsonNode
     {
@@ -9,6 +11,11 @@
         {
             this.index = index;
             this.offset = offset;
+        }
+
+        public IEnumerable<JsonNode> GetChildren()
+        {
+            yield break;
         }
 
         public void Accept(JsonVisitor visitor)

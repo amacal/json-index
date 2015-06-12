@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
 using NUnit.Framework;
 
 namespace JsonIndex.Tests.Constraints
@@ -20,6 +23,11 @@ namespace JsonIndex.Tests.Constraints
         public void Verify(JsonCollector collector)
         {
             Assert.That(collector.Texts.Items, Is.EquivalentTo(this.texts));
+        }
+
+        public void Verify(IEnumerable<JsonNode> nodes)
+        {
+            Assert.That(nodes.OfType<JsonText>().Select(node => node.GetValue()), Is.EquivalentTo(this.texts));
         }
     }
 }

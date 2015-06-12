@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
 using NUnit.Framework;
 
 namespace JsonIndex.Tests.Constraints
@@ -48,6 +51,24 @@ namespace JsonIndex.Tests.Constraints
             if (this.value == null)
             {
                 Assert.That(collector.Primitives.True + collector.Primitives.False, Is.EqualTo(0));
+            }
+        }
+
+        public void Verify(IEnumerable<JsonNode> nodes)
+        {
+            if (this.value == true)
+            {
+                Assert.That(nodes.OfType<JsonTrue>().Count(), Is.EqualTo(this.count));
+            }
+
+            if (this.value == false)
+            {
+                Assert.That(nodes.OfType<JsonFalse>().Count(), Is.EqualTo(this.count));
+            }
+
+            if (this.value == null)
+            {
+                Assert.That(nodes.OfType<JsonTrue>().Count() + nodes.OfType<JsonFalse>().Count(), Is.EqualTo(0));
             }
         }
     }

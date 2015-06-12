@@ -11,9 +11,9 @@ namespace JsonIndex.Tests.Collections
             this.items = new HashSet<string>();
         }
 
-        public void Add(JsonNumber text)
+        public void Add(JsonNumber number)
         {
-            this.items.Add(text.GetValue());
+            this.items.Add(number.GetValue());
         }
 
         public IEnumerable<string> Items

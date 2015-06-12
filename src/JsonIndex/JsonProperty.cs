@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace JsonIndex
 {
@@ -11,6 +12,11 @@ namespace JsonIndex
         {
             this.index = index;
             this.offset = offset;
+        }
+
+        public IEnumerable<JsonNode> GetChildren()
+        {
+            yield return this.GetValue();
         }
 
         public void Accept(JsonVisitor visitor)

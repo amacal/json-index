@@ -14,6 +14,11 @@ namespace JsonIndex
             this.offset = offset;
         }
 
+        public IEnumerable<JsonNode> GetChildren()
+        {
+            return this.GetItems();
+        }
+
         public void Accept(JsonVisitor visitor)
         {
             visitor.Visit(this);
