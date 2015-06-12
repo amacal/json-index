@@ -53,6 +53,7 @@
     <Compile Include="JsonVisitor.cs" />
     <Compile Include="JsonText.cs" />
     <Compile Include="JsonTrue.cs" />
+    <Compile Include="JsonVisitorBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -3,7 +3,7 @@ using JsonIndex.Tests.Collections;
 
 namespace JsonIndex.Tests
 {
-    public class JsonCollector : JsonVisitor
+    public class JsonCollector : JsonVisitorBase
     {
         private readonly JsonDataCollection data;
         private readonly JsonNameCollection names;
@@ -59,62 +59,53 @@ namespace JsonIndex.Tests
             get { return this.primitives; }
         }
 
-        public void Visit(JsonObject instance)
+        public override void Visit(JsonObject instance)
         {
             this.data.Add(instance);
             this.objects.Add(instance);
-
-            foreach (JsonProperty property in instance.Properties)
-            {
-                property.Accept(this);
-            }
+            base.Visit(instance);
         }
 
-        public void Visit(JsonProperty property)
+        public override void Visit(JsonProperty property)
         {
             this.names.Add(property);
             this.data.Add(property);
-
-            property.GetValue().Accept(this);
+            base.Visit(property);
         }
 
-        public void Visit(JsonArray array)
+        public override void Visit(JsonArray array)
         {
             this.data.Add(array);
-
-            foreach (JsonNode node in array.GetItems())
-            {
-                node.Accept(this);
-            }
+            base.Visit(array);
         }
 
-        public void Visit(JsonItem item)
+        public override void Visit(JsonItem item)
         {
             this.items.Add(item);
-            item.GetValue().Accept(this);
+            base.Visit(item);
         }
 
-        public void Visit(JsonText text)
+        public override void Visit(JsonText text)
         {
             this.texts.Add(text);
         }
 
-        public void Visit(JsonNumber number)
+        public override void Visit(JsonNumber number)
         {
             this.numbers.Add(number);
         }
 
-        public void Visit(JsonTrue value)
+        public override void Visit(JsonTrue value)
         {
             this.primitives.Add(value);
         }
 
-        public void Visit(JsonFalse value)
+        public override void Visit(JsonFalse value)
         {
             this.primitives.Add(value);
         }
 
-        public void Visit(JsonNull value)
+        public override void Visit(JsonNull value)
         {
             this.primitives.Add(value);
         }
