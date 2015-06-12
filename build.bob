@@ -45,7 +45,7 @@ public class Build : IBob
 
         yield return NUnit.Execute(parameters =>
         {
-            parameters.Assemblies = FileSystem.Files.Match("build\\output\\JsonIndex.Tests.dll");
+            parameters.Assemblies = FileSystem.Files.Match("build\\output\\JsonIndex.*.dll");
             parameters.XmlResult = FileSystem.Files.Relative("build\\nunit.xml");
         });
     }
@@ -67,7 +67,7 @@ public class Build : IBob
             parameters.Specification = NuGet.Specification.Inline(package =>
             {
                 package.Id = "json-index";
-                package.Version = "0.1.0-dev10";
+                package.Version = "0.1.2";
                 package.Authors = "Adrian Macal";
                 package.Description = "JSON indexing library.";
                 package.Files["lib\\net45"] = FileSystem.Files.Match("build\\output\\JsonIndex.dll");

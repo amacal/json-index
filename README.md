@@ -7,77 +7,33 @@ The library aims not to be used as a replacement for any deserializer. It just o
 # Usage
 The following code is responsible for counting all occurrences of "hello-world" in all text nodes:
 ```csharp
-using JsonIndex;
-
-public class HelloWorld
-{
-  public int Count(string json)
-  {
-    Index index = Index.Build(json);
-    JsonVisitor visitor = new HelloWorldCounter();
-
-    index.Visit(visitor);
-    return visitor.Count;
-  }
-}
-
-public class HelloWorldCounter : JsonVisitor
-{
-  private int count;
-
-  public void Visit(JsonObject instance)
-  {
-    foreach (JsonProperty property in instance.Properties)
+    public class HelloWorldSample
     {
-      property.Accept(this);
+        public int Count(string data)
+        {
+            Index index = Index.Build(data);
+            HelloWorldCounter counter = new HelloWorldCounter();
+
+            index.Root.Accept(counter);
+            return counter.Count;
+        }
     }
-  }
 
-  public int Count
-  {
-    get { return this.count; }
-  }
-
-  public void Visit(JsonProperty property)
-  {
-    property.GetValue().Accept(this);
-  }
-
-  public void Visit(JsonArray array)
-  {
-    foreach (JsonNode node in array.GetItems())
+    public class HelloWorldCounter : JsonVisitorBase
     {
-        node.Accept(this);
+        private int count;
+
+        public int Count
+        {
+            get { return this.count; }
+        }
+
+        public override void Visit(JsonText text)
+        {
+            if (text.GetValue().Contains("hello-world") == true)
+            {
+                this.count++;
+            }
+        }
     }
-  }
-
-  public void Visit(JsonItem item)
-  {
-    item.GetValue().Accept(this);
-  }
-
-  public void Visit(JsonText text)
-  {
-    if (text.GetValue().Contains("hello-world") == true)
-    {
-      this.count++;
-    }
-  }
-
-  public void Visit(JsonNumber number)
-  {
-  }
-
-  public void Visit(JsonTrue value)
-  {
-  }
-
-  public void Visit(JsonFalse value)
-  {
-  }
-
-  public void Visit(JsonNull value)
-  {
-  }
-}
 ```
