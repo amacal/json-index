@@ -8,7 +8,7 @@ namespace JsonIndex.Tests
         private readonly JsonDataCollection data;
         private readonly JsonNameCollection names;
         private readonly JsonTextCollection texts;
-        private readonly JsonItemCollection items;
+        private readonly JsonArrayCollection arrays;
         private readonly JsonObjectCollection objects;
         private readonly JsonNumberCollection numbers;
         private readonly JsonPrimitiveCollection primitives;
@@ -18,7 +18,7 @@ namespace JsonIndex.Tests
             this.data = new JsonDataCollection();
             this.names = new JsonNameCollection();
             this.texts = new JsonTextCollection();
-            this.items = new JsonItemCollection();
+            this.arrays = new JsonArrayCollection();
             this.objects = new JsonObjectCollection();
             this.numbers = new JsonNumberCollection();
             this.primitives = new JsonPrimitiveCollection();
@@ -39,9 +39,9 @@ namespace JsonIndex.Tests
             get { return this.texts; }
         }
 
-        public JsonItemCollection Items
+        public JsonArrayCollection Array
         {
-            get { return this.items; }
+            get { return this.arrays; }
         }
 
         public JsonObjectCollection Objects
@@ -81,7 +81,7 @@ namespace JsonIndex.Tests
 
         public override void Visit(JsonItem item)
         {
-            this.items.Add(item);
+            this.arrays.Add(item);
             base.Visit(item);
         }
 

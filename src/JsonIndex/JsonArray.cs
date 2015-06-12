@@ -16,7 +16,7 @@ namespace JsonIndex
 
         public IEnumerable<JsonNode> GetChildren()
         {
-            return this.GetItems();
+            return this.Items;
         }
 
         public void Accept(JsonVisitor visitor)
@@ -24,18 +24,9 @@ namespace JsonIndex
             visitor.Visit(this);
         }
 
-        public IEnumerable<JsonNode> GetItems()
+        public JsonItemCollection Items
         {
-            IndexEntry entry = this.index[this.offset];
-            int child = entry.First;
-            int count = 0;
-
-            while (child > 0)
-            {
-                yield return new JsonItem(this.index, child, count);
-                child = this.index[child].Next;
-                count++;
-            }
+            get { return new JsonItemCollection(this.index, this.index[this.offset].First); }
         }
 
         public override string ToString()

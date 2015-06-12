@@ -44,6 +44,7 @@
     <Compile Include="JsonContainer.cs" />
     <Compile Include="JsonFalse.cs" />
     <Compile Include="JsonItem.cs" />
+    <Compile Include="JsonItemCollection.cs" />
     <Compile Include="JsonNode.cs" />
     <Compile Include="JsonNull.cs" />
     <Compile Include="JsonNumber.cs" />

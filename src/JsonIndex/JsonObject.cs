@@ -26,12 +26,7 @@ namespace JsonIndex
 
         public JsonPropertyCollection Properties
         {
-            get
-            {
-                IndexEntry entry = this.index[this.offset];
-
-                return new JsonPropertyCollection(this.index, entry.First);
-            }
+            get { return new JsonPropertyCollection(this.index, this.index[this.offset].First); }
         }
 
         public override string ToString()

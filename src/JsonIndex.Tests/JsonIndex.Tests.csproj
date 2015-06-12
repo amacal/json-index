@@ -39,7 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Collections\JsonDataCollection.cs" />
-    <Compile Include="Collections\JsonItemCollection.cs" />
+    <Compile Include="Collections\JsonArrayCollection.cs" />
     <Compile Include="Collections\JsonNameCollection.cs" />
     <Compile Include="Collections\JsonNumberCollection.cs" />
     <Compile Include="Collections\JsonObjectCollection.cs" />

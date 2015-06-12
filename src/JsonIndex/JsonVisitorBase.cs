@@ -17,7 +17,7 @@
 
         public virtual void Visit(JsonArray array)
         {
-            foreach (JsonItem item in array.GetItems())
+            foreach (JsonItem item in array.Items)
             {
                 item.Accept(this);
             }

@@ -1,6 +1,6 @@
 ﻿namespace JsonIndex.Tests.Collections
 {
-    public class JsonItemCollection
+    public class JsonArrayCollection
     {
         private int count;
 

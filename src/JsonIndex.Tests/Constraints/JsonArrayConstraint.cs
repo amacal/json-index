@@ -21,7 +21,7 @@ namespace JsonIndex.Tests.Constraints
 
         public void Verify(JsonCollector collector)
         {
-            Assert.That(collector.Items.Count, Is.EqualTo(this.count));
+            Assert.That(collector.Array.Count, Is.EqualTo(this.count));
         }
 
         public void Verify(IEnumerable<JsonNode> nodes)
