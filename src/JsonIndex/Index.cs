@@ -29,12 +29,12 @@ namespace JsonIndex
 
         public JsonNode Root
         {
-            get 
+            get
             {
-                switch(this[0].Type)
+                switch (this[0].Type)
                 {
                     case IndexType.Object:
-                        return new JsonObject(this, 0); 
+                        return new JsonObject(this, 0);
 
                     case IndexType.Array:
                         return new JsonArray(this, 0);

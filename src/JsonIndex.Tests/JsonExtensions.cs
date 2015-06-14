@@ -8,7 +8,7 @@ namespace JsonIndex.Tests
         {
             yield return node;
 
-            foreach(JsonNode child in node.GetChildren())
+            foreach (JsonNode child in node.GetChildren())
             {
                 foreach (JsonNode item in child.Flatten())
                 {

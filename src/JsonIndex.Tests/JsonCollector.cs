@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using JsonIndex.Tests.Collections;
+﻿using JsonIndex.Tests.Collections;
 
 namespace JsonIndex.Tests
 {

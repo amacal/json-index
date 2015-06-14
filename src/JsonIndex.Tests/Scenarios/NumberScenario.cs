@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using JsonIndex.Tests.Constraints;
+﻿using JsonIndex.Tests.Constraints;
+using System.Collections.Generic;
 
 namespace JsonIndex.Tests.Scenarios
 {

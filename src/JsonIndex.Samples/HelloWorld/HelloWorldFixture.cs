@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-
-using NUnit.Framework;
+﻿using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace JsonIndex.Samples.HelloWorld
 {

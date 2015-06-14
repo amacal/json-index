@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-
+﻿using JsonIndex.Tests.Scenarios;
 using NUnit.Framework;
-using JsonIndex.Tests.Scenarios;
+using System.Collections.Generic;
 
 namespace JsonIndex.Tests
 {
