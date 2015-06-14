@@ -1,0 +1,9 @@
+language: csharp
+solution: JsonIndex.2013.Community.sln
+install:
+  - nuget restore JsonIndex.2013.Community.sln
+  - nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory packages
+script:
+  - xbuild /p:Configuration=Debug /p:OutDir=/home/travis/build/amacal/json-index/build/output/ JsonIndex.2013.Community.sln
+  - mono ./packages/NUnit.Runners.2.6.4/tools/nunit-console.exe ./build/output/JsonIndex.Samples.dll
+  - mono ./packages/NUnit.Runners.2.6.4/tools/nunit-console.exe ./build/output/JsonIndex.Tests.dll
