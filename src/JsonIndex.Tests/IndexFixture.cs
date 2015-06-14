@@ -1,5 +1,6 @@
 ﻿using JsonIndex.Tests.Scenarios;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 
 namespace JsonIndex.Tests
@@ -48,6 +49,17 @@ namespace JsonIndex.Tests
 
             // assert
             scenario.Constraint.Verify(nodes);
+        }
+
+        [Test]
+        [TestCaseSource(typeof(ViolationScenario), "All")]
+        public void IndexingShouldCauseAnException(JsonInstance instance)
+        {
+            // act
+            TestDelegate act = () => Index.Build(instance.Data);
+
+            // assert
+            Assert.That(act, Throws.InstanceOf<IndexException>());
         }
     }
 }

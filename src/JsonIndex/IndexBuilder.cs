@@ -173,6 +173,7 @@ namespace JsonIndex
 
                     default:
                         AddViolation(String.Format("The parser required value, but found unknown character. character={0}", data[position]));
+                        position = data.Length;
                         break;
                 }
             }
