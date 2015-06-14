@@ -38,8 +38,10 @@
     <Compile Include="IndexBuilder.cs" />
     <Compile Include="IndexEntry.cs" />
     <Compile Include="IndexException.cs" />
+    <Compile Include="IndexResult.cs" />
     <Compile Include="IndexSettings.cs" />
     <Compile Include="IndexType.cs" />
+    <Compile Include="IndexViolation.cs" />
     <Compile Include="JsonArray.cs" />
     <Compile Include="JsonContainer.cs" />
     <Compile Include="JsonFalse.cs" />

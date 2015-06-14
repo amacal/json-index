@@ -155,17 +155,27 @@ namespace JsonIndex
         public static Index Build(string data)
         {
             IndexBuilder builder = new IndexBuilder(data, new IndexSettings());
-            Index index = builder.Build();
+            IndexResult result = builder.Build();
 
-            return index;
+            if (result.IsSuccessful() == false)
+            {
+                throw new IndexException("The index could not be built.", result.Violations);
+            }
+
+            return result.Index;
         }
 
         public static Index Build(string data, IndexSettings settings)
         {
             IndexBuilder builder = new IndexBuilder(data, settings);
-            Index index = builder.Build();
+            IndexResult result = builder.Build();
 
-            return index;
+            if (result.IsSuccessful() == false)
+            {
+                throw new IndexException("The index could not be built.", result.Violations);
+            }
+
+            return result.Index;
         }
     }
 }

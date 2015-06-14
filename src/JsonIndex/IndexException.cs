@@ -1,12 +1,20 @@
 ﻿using System;
 
 namespace JsonIndex
-{
+{   
     public class IndexException : Exception
     {
-        public IndexException(string message)
+        private readonly IndexViolation[] violations;
+
+        public IndexException(string message, IndexViolation[] violations)
             : base(message)
         {
+            this.violations = violations;
+        }
+
+        public IndexViolation[] Violations
+        {
+            get { return this.violations; }
         }
     }
 }

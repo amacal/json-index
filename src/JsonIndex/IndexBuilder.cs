@@ -1,28 +1,31 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 
 namespace JsonIndex
 {
     internal class IndexBuilder
     {
+        private readonly List<IndexViolation> violations;
         private readonly Index index;
         private readonly string data;
         private int position;
 
         public IndexBuilder(string data, IndexSettings settings)
         {
+            this.violations = new List<IndexViolation>();
             this.index = new Index(data, settings);
             this.data = data;
             this.position = 0;
         }
 
-        public Index Build()
+        public IndexResult Build()
         {
             SkipByteOrderMark();
             SkipWhiteCharacters();
             ParseObjectOrArray(-1);
 
-            return this.index;
+            return new IndexResult(this.index, this.violations.ToArray());
         }
 
         private void ParseObjectOrArray(int parent)
@@ -40,7 +43,8 @@ namespace JsonIndex
                         break;
 
                     default:
-                        throw new IndexException(String.Format("The parser required object or array, but found unknown character. position={0}; character={1}", position, data[position]));
+                        AddViolation(String.Format("The parser required object or array, but found unknown character. character={0}", data[position]));
+                        break;
                 }
             }
         }
@@ -62,7 +66,7 @@ namespace JsonIndex
 
             if (position >= data.Length)
             {
-                throw new IndexException("The parser required '}', but found end of data.");
+                AddViolation("The parser required '}', but found end of data.");
             }
 
             if (position < data.Length)
@@ -108,7 +112,7 @@ namespace JsonIndex
 
             if (position >= data.Length)
             {
-                throw new IndexException("The parser required ']', but found end of data.");
+                AddViolation("The parser required ']', but found end of data.");
             }
 
             if (position < data.Length)
@@ -168,7 +172,8 @@ namespace JsonIndex
                         break;
 
                     default:
-                        throw new IndexException(String.Format("The parser required value, but found unknown character. position={0}; character={1}", position, data[position]));
+                        AddViolation(String.Format("The parser required value, but found unknown character. character={0}", data[position]));
+                        break;
                 }
             }
         }
@@ -190,7 +195,7 @@ namespace JsonIndex
 
             if (position >= data.Length)
             {
-                throw new IndexException("The parser required '\"', but found end of data.");
+                AddViolation("The parser required '\"', but found end of data.");
             }
 
             if (position < data.Length)
@@ -282,7 +287,7 @@ namespace JsonIndex
             {
                 if (data[position] != character)
                 {
-                    throw new IndexException(String.Format("The parser required character {0}. position={1}; character={2}", character, position, data[position]));
+                    AddViolation(String.Format("The parser required character {0}. character={1}", character, data[position]));
                 }
 
                 position++;
@@ -295,7 +300,8 @@ namespace JsonIndex
             {
                 if (position < data.Length && data[position] != character)
                 {
-                    throw new IndexException(String.Format("The parser required sequence '{0}'. position={1}; character={2}", characters, position, data[position]));
+                    AddViolation(String.Format("The parser required sequence '{0}'. character={1}", characters, data[position]));
+                    break;
                 }
 
                 position++;
@@ -324,6 +330,11 @@ namespace JsonIndex
             {
                 position++;
             }
+        }
+
+        private void AddViolation(string reason)
+        {
+            this.violations.Add(new IndexViolation(this.position, reason));
         }
     }
 }
