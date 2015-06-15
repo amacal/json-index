@@ -61,5 +61,25 @@ namespace JsonIndex.Tests
             // assert
             Assert.That(act, Throws.InstanceOf<IndexException>());
         }
+
+        [Test]
+        [TestCaseSource(typeof(ScanScenario), "Array")]
+        [TestCaseSource(typeof(ScanScenario), "Object")]
+        [TestCaseSource(typeof(ScanScenario), "Mixed")]
+        public void ScanningShouldExtractTheStructure(JsonScenario scenario)
+        {
+            // arrange
+            JsonCollector collector = new JsonCollector();
+            IEnumerable<Index> indices = Index.Scan(scenario.Instance.Data);
+
+            // act
+            foreach (Index index in indices)
+            {
+                index.Root.Accept(collector);
+            }
+
+            // assert
+            scenario.Constraint.Verify(collector);
+        }
     }
 }

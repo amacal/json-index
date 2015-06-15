@@ -28,6 +28,17 @@ namespace JsonIndex
             return new IndexResult(this.index, this.violations.ToArray());
         }
 
+        public IndexResult Build(int position)
+        {
+            this.position = position;
+
+            SkipByteOrderMark();
+            SkipWhiteCharacters();
+            ParseObjectOrArray(-1);
+
+            return new IndexResult(this.index, this.violations.ToArray());
+        }
+
         private void ParseObjectOrArray(int parent)
         {
             if (position < data.Length)

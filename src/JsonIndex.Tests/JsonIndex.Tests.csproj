@@ -63,6 +63,7 @@
     <Compile Include="Scenarios\ArrayScenario.cs" />
     <Compile Include="Scenarios\ObjectScenario.cs" />
     <Compile Include="Scenarios\NumberScenario.cs" />
+    <Compile Include="Scenarios\ScanScenario.cs" />
     <Compile Include="Scenarios\TextScenario.cs" />
     <Compile Include="Scenarios\ViolationScenario.cs" />
   </ItemGroup>
