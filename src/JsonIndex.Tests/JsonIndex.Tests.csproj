@@ -53,6 +53,7 @@
     <Compile Include="JsonConstraint.cs" />
     <Compile Include="Constraints\JsonDataConstraint.cs" />
     <Compile Include="JsonExtensions.cs" />
+    <Compile Include="JsonInlineSource.cs" />
     <Compile Include="JsonInstance.cs" />
     <Compile Include="Constraints\JsonNameConstraint.cs" />
     <Compile Include="Constraints\JsonNumberConstraint.cs" />

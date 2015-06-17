@@ -7,7 +7,7 @@ namespace JsonIndex.Tests.Scenarios
     {
         public static IEnumerable<JsonScenario> Default()
         {
-            JsonInstance instance = new JsonInstance
+            JsonInstance instance = new JsonInlineSource
             {
                 Name = "text-default",
                 Data = @"{""prop-a"":""value-a"",""prop-b"":""value-b""}"
@@ -34,7 +34,7 @@ namespace JsonIndex.Tests.Scenarios
 
         public static IEnumerable<JsonScenario> Escape()
         {
-            JsonInstance instance = new JsonInstance
+            JsonInstance instance = new JsonInlineSource
             {
                 Name = "text-escape",
                 Data = @"{""prop-a"":""\"""",""\\"":""\uabcdefgh"",""prop-c"":""""}"
@@ -49,7 +49,7 @@ namespace JsonIndex.Tests.Scenarios
 
         public static IEnumerable<JsonScenario> ByteOrderMark()
         {
-            JsonInstance instance = new JsonInstance
+            JsonInstance instance = new JsonInlineSource
             {
                 Name = "text-escape",
                 Data = "\ufeff\u200b" + @"{""prop-a"":""abc""}"

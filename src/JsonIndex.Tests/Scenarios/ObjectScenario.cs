@@ -7,7 +7,7 @@ namespace JsonIndex.Tests.Scenarios
     {
         public static IEnumerable<JsonScenario> Empty()
         {
-            JsonInstance instance = new JsonInstance
+            JsonInstance instance = new JsonInlineSource
             {
                 Name = "object-empty",
                 Data = "{}"
@@ -52,7 +52,7 @@ namespace JsonIndex.Tests.Scenarios
 
         public static IEnumerable<JsonScenario> Mixed()
         {
-            JsonInstance instance = new JsonInstance
+            JsonInstance instance = new JsonInlineSource
             {
                 Name = "object-mixed",
                 Data = @"{""text"":""abc"",""number"":123,""prop-true"":true,""prop-false"":false,""prop-null"":null,""object"":{},""array"":[]}"

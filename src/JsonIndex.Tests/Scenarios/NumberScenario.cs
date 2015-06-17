@@ -7,7 +7,7 @@ namespace JsonIndex.Tests.Scenarios
     {
         public static IEnumerable<JsonScenario> Default()
         {
-            JsonInstance instance = new JsonInstance
+            JsonInstance instance = new JsonInlineSource
             {
                 Name = "number-default",
                 Data = @"{""prop-a"":123,""prop-b"":123.456,""prop-c"":-123,""prop-d"":12.13e-7}"

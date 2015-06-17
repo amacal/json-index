@@ -7,7 +7,7 @@ namespace JsonIndex.Tests.Scenarios
     {
         public static IEnumerable<JsonScenario> Array()
         {
-            JsonInstance instance = new JsonInstance
+            JsonInstance instance = new JsonInlineSource
             {
                 Name = "array-in-the-middle",
                 Data = @"value[""aa"",""bb""]+23"
@@ -22,7 +22,7 @@ namespace JsonIndex.Tests.Scenarios
 
         public static IEnumerable<JsonScenario> Object()
         {
-            JsonInstance instance = new JsonInstance
+            JsonInstance instance = new JsonInlineSource
             {
                 Name = "object-in-the-middle",
                 Data = @"value{""prop"":""aa"",""prop"":""bb""}+23"
@@ -37,7 +37,7 @@ namespace JsonIndex.Tests.Scenarios
 
         public static IEnumerable<JsonScenario> Mixed()
         {
-            JsonInstance instance = new JsonInstance
+            JsonInstance instance = new JsonInlineSource
             {
                 Name = "mixed",
                 Data = @"value{""prop""://""aa"",[""prop"",""bb""]}+23[123]"

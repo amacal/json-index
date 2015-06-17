@@ -21,7 +21,8 @@ namespace JsonIndex.Tests
         {
             // arrange
             JsonCollector collector = new JsonCollector();
-            Index index = IndexFactory.Build(scenario.Instance.Data);
+            string data = scenario.Instance.GetData();
+            Index index = IndexFactory.Build(data);
 
             // act
             index.Root.Accept(collector);
@@ -42,7 +43,8 @@ namespace JsonIndex.Tests
         public void IndexingAndEnumeratingShouldExtractTheStructure(JsonScenario scenario)
         {
             // arrange
-            Index index = IndexFactory.Build(scenario.Instance.Data);
+            string data = scenario.Instance.GetData();
+            Index index = IndexFactory.Build(data);
 
             // act
             IEnumerable<JsonNode> nodes = index.Root.Flatten();
@@ -55,8 +57,11 @@ namespace JsonIndex.Tests
         [TestCaseSource(typeof(ViolationScenario), "All")]
         public void IndexingShouldCauseAnException(JsonInstance instance)
         {
+            // arrange
+            string data = instance.GetData();
+
             // act
-            TestDelegate act = () => IndexFactory.Build(instance.Data);
+            TestDelegate act = () => IndexFactory.Build(data);
 
             // assert
             Assert.That(act, Throws.InstanceOf<IndexException>());
@@ -70,7 +75,8 @@ namespace JsonIndex.Tests
         {
             // arrange
             JsonCollector collector = new JsonCollector();
-            IEnumerable<Index> indices = IndexFactory.Scan(scenario.Instance.Data);
+            string data = scenario.Instance.GetData();
+            IEnumerable<Index> indices = IndexFactory.Scan(data);
 
             // act
             foreach (Index index in indices)

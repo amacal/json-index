@@ -1,14 +1,9 @@
 ﻿namespace JsonIndex.Tests
 {
-    public class JsonInstance
+    public interface JsonInstance
     {
-        public string Name { get; set; }
+        string Name { get;  }
 
-        public string Data { get; set; }
-
-        public override string ToString()
-        {
-            return this.Name;
-        }
+        string GetData();
     }
 }
