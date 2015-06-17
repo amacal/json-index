@@ -38,6 +38,7 @@
     <Compile Include="IndexBuilder.cs" />
     <Compile Include="IndexEntry.cs" />
     <Compile Include="IndexException.cs" />
+    <Compile Include="IndexFactory.cs" />
     <Compile Include="IndexResult.cs" />
     <Compile Include="IndexSettings.cs" />
     <Compile Include="IndexType.cs" />

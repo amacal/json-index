@@ -4,7 +4,7 @@
     {
         public int Count(string data)
         {
-            Index index = Index.Build(data);
+            Index index = IndexFactory.Build(data);
             HelloWorldCounter counter = new HelloWorldCounter();
 
             index.Root.Accept(counter);
