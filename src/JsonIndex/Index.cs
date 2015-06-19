@@ -151,5 +151,23 @@ namespace JsonIndex
 
             return true;
         }
+
+        internal bool Equals(IndexEntry left, IndexEntry right)
+        {
+            if (left.End - left.Start != right.End - right.Start)
+            {
+                return false;
+            }
+
+            for (int i = left.Start, j = right.Start; i <= left.End; i++, j++)
+            {
+                if (this.data[i] != this.data[j])
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
     }
 }

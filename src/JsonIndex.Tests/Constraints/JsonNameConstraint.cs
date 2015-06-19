@@ -26,7 +26,7 @@ namespace JsonIndex.Tests.Constraints
 
         public void Verify(IEnumerable<JsonNode> nodes)
         {
-            Assert.That(nodes.OfType<JsonProperty>().Select(node => node.GetName()), Is.EquivalentTo(this.names));
+            Assert.That(nodes.OfType<JsonProperty>().Select(node => node.Name.Value), Is.EquivalentTo(this.names));
         }
     }
 }

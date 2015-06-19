@@ -23,9 +23,9 @@ namespace JsonIndex
             visitor.Visit(this);
         }
 
-        public string GetName()
+        public JsonPropertyName Name
         {
-            return this.index.GetData(this.offset);
+            get { return new JsonPropertyName(this.index, this.offset); }
         }
 
         public JsonNode GetValue()
