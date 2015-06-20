@@ -5,6 +5,17 @@ namespace JsonIndex
 {
     public class JsonTerminator : JsonNode
     {
+        public static readonly JsonTerminator Instance;
+
+        static JsonTerminator()
+        {
+            Instance = new JsonTerminator();
+        }
+
+        private JsonTerminator()
+        {
+        }
+
         public IEnumerable<JsonNode> GetChildren()
         {
             yield break;

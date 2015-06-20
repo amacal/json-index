@@ -4,6 +4,17 @@ namespace JsonIndex
 {
     public class JsonNull : JsonNode
     {
+        public static readonly JsonNull Instance;
+
+        static JsonNull()
+        {
+            Instance = new JsonNull();
+        }
+
+        private JsonNull()
+        {
+        }
+
         public IEnumerable<JsonNode> GetChildren()
         {
             yield break;

@@ -8,7 +8,7 @@ namespace JsonIndex
         {
             if (offset == 0)
             {
-                return new JsonTerminator();
+                return JsonTerminator.Instance;
             }
 
             switch (index[offset].Type)
@@ -17,7 +17,7 @@ namespace JsonIndex
                     return new JsonObject(index, offset);
 
                 case IndexType.Property:
-                    return new JsonTerminator();
+                    return JsonTerminator.Instance;
 
                 case IndexType.Array:
                     return new JsonArray(index, offset);
@@ -29,13 +29,13 @@ namespace JsonIndex
                     return new JsonNumber(index, offset);
 
                 case IndexType.True:
-                    return new JsonTrue();
+                    return JsonTrue.Instance;
 
                 case IndexType.False:
-                    return new JsonFalse();
+                    return JsonFalse.Instance;
 
                 case IndexType.Null:
-                    return new JsonNull();
+                    return JsonNull.Instance;
 
                 default:
                     throw new NotSupportedException();

@@ -4,6 +4,17 @@ namespace JsonIndex
 {
     public class JsonFalse : JsonNode
     {
+        public static readonly JsonFalse Instance;
+
+        static JsonFalse()
+        {
+            Instance = new JsonFalse();
+        }
+
+        private JsonFalse()
+        {
+        }
+
         public IEnumerable<JsonNode> GetChildren()
         {
             yield break;

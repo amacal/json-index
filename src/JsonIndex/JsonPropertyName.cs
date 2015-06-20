@@ -23,9 +23,10 @@
 
         public override bool Equals(object obj)
         {
-            JsonPropertyName other = (JsonPropertyName)obj;
+            JsonPropertyName other = obj as JsonPropertyName;
 
-            return this.index.Equals(this.index[this.offset], this.index[other.offset]);
+            return other != null
+                && this.index.Equals(this.index[this.offset], this.index[other.offset]);
         }
     }
 }
