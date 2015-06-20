@@ -55,6 +55,7 @@
     <Compile Include="JsonProperty.cs" />
     <Compile Include="JsonPropertyCollection.cs" />
     <Compile Include="JsonPropertyName.cs" />
+    <Compile Include="JsonTerminator.cs" />
     <Compile Include="JsonVisitor.cs" />
     <Compile Include="JsonText.cs" />
     <Compile Include="JsonTrue.cs" />

@@ -6,10 +6,18 @@ namespace JsonIndex
     {
         public static JsonNode GetValue(Index index, int offset)
         {
+            if (offset == 0)
+            {
+                return new JsonTerminator();
+            }
+
             switch (index[offset].Type)
             {
                 case IndexType.Object:
                     return new JsonObject(index, offset);
+
+                case IndexType.Property:
+                    return new JsonTerminator();
 
                 case IndexType.Array:
                     return new JsonArray(index, offset);

@@ -30,12 +30,13 @@ namespace JsonIndex
 
         public JsonNode GetValue()
         {
-            return JsonContainer.GetValue(this.index, this.offset + 1);
+            IndexEntry entry = this.index[this.offset];
+            return JsonContainer.GetValue(this.index, entry.Next);
         }
 
         public override string ToString()
         {
-            return this.index.GetData(this.offset + 1);
+            return this.GetValue().ToString();
         }
     }
 }

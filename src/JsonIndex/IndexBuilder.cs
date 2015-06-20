@@ -213,7 +213,11 @@ namespace JsonIndex
             if (position < data.Length)
             {
                 Require('"');
-                Define(type, parent, start, position - 2);
+
+                if (this.index.Settings.IndexText == true || type != IndexType.Text)
+                {
+                    Define(type, parent, start, position - 2);
+                }
             }
         }
 

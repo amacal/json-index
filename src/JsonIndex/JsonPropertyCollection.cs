@@ -47,19 +47,18 @@ namespace JsonIndex
 
         public IEnumerator<JsonProperty> GetEnumerator()
         {
-            int previous = this.offset, child = this.offset;
+            int child = this.offset;
             IndexEntry entry;
 
             while (child > 0)
             {
                 entry = this.index[child];
 
-                if (entry.Type != IndexType.Property)
+                if (entry.Type == IndexType.Property)
                 {
-                    yield return new JsonProperty(this.index, previous);
+                    yield return new JsonProperty(this.index, child);
                 }
 
-                previous = child;
                 child = entry.Next;
             }
         }
