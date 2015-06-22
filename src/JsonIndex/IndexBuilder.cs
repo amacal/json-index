@@ -283,7 +283,7 @@ namespace JsonIndex
         {
             RequireSequence("null");
 
-            if (this.index.Settings.IndexTrue == true)
+            if (this.index.Settings.IndexNull == true)
             {
                 Define(IndexType.Null, parent, position - 4, position - 1);
             }
